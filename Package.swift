@@ -5,15 +5,17 @@ import PackageDescription
 
 let package = Package(
     name: "KSSDiff",
+    platforms: [
+        .macOS(.v10_15)
+    ],
     products: [
         .library(name: "KSSDiff", targets: ["KSSDiff"]),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/klassen-software-solutions/KSSCore.git", from: "3.1.0"),
     ],
     targets: [
-        .target(name: "KSSDiff", dependencies: []),
+        .target(name: "KSSDiff", dependencies: [.product(name: "KSSFoundation", package: "KSSCore")]),
         .testTarget(name: "KSSDiffTests", dependencies: ["KSSDiff"]),
     ]
 )
