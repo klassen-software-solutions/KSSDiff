@@ -1,0 +1,25 @@
+name: On Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  docs:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Install Jazzy
+      run: |
+        sudo gem install jazzy
+
+    - name: Publish Docs
+      env:
+        X_URL: ${{ secrets.API_PUBLISHER_URL }}
+        X_USER: ${{ secrets.API_PUBLISHER_USER }}
+        X_PW: ${{ secrets.API_PUBLISHER_PASSWORD }}
+      run: |
+        git submodule update --init --recursive
+        make docs
+        BuildSystem/common/publish.py --url "$X_URL" --user "$X_USER" --password "$X_PW" docs
