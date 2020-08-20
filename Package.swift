@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "KSSDiff", targets: ["KSSDiff"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/klassen-software-solutions/KSSCore.git", from: "3.1.1"),
+        .package(url: "https://github.com/klassen-software-solutions/KSSCore.git", from: "3.2.0"),
     ],
     targets: [
         .target(name: "KSSDiff", dependencies: [.product(name: "KSSFoundation", package: "KSSCore")]),

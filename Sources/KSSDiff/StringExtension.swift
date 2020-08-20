@@ -16,7 +16,7 @@ public extension String {
 
      - note: This is a wrapper around the `DiffMatchPatch` class that assumes no timeout and that
      strips out any equality items. In this manner, the return value contains only the differences (the insertions and
-     the deletions). If you wish more control over the difference parameters, or you will to retain the equality
+     the deletions). If you wish more control over the difference parameters, or you wish to retain the equality
      "differences", then you will need to call `DiffMatchPatch.main` manually.
      */
     func differencesFrom(_ s: String) -> [Difference] {
