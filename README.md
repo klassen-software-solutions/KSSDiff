@@ -11,9 +11,12 @@ slightly more complex API to handle the cases where the default settings are not
 _Note:_ The underlying code is a Swift port of the Python3 code found at 
 [google/diff-match-patch](https://github.com/google/diff-match-patch).
 
-_Note:_ This package has been tested on MacOS and Ubuntu Linux.
-
 [API Documentation](https://www.kss.cc/apis/KSSDiff/docs/index.html)
+
+## Module Availability
+
+This package is currently available on _macOS_, _iOS_, and _Linux_. (Specifically it has been
+tested on Ubuntu Linux.)
 
 ## Originating Code
 
@@ -47,15 +50,3 @@ that we don't iterate through the same portion of a string more than once. In so
 done by caching positions, and in other cases, by deriving positions based on other nearby known
 positions. Unfortunately these optimizations significantly reduce the readability of the code, so any 
 changes made must be done with great care.
-
-## Contributing
-
-If you are going to contribute to this project, please make yourself familiar with our standards and
-procedures:
-
-* [Git Procedures](https://www.kss.cc/standards-git.html)
-* [Swift Coding Standards](https://www.kss.cc/standards-swift.html)
-
-_However_, since this code is largely a port of Python3 code, the syntax does not entirely match our
-normal coding standards. Specifically naming conventions, and even a couple of operators, are following
-that of the original python3 code. But any new additions made should follow the proper Swift standards.
