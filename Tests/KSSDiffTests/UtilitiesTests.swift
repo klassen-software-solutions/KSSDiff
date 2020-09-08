@@ -6,113 +6,110 @@
 //
 
 import Foundation
-
+import KSSTest
 import XCTest
+
 @testable import KSSDiff
 
 final class UtilitiesTests: XCTestCase {
     func testFloordiv() {
-        XCTAssertEqual(floordiv(4, 2), 2)
-        XCTAssertEqual(floordiv(5, 2), 2)
+        assertEqual(to: 2) { floordiv(4, 2) }
+        assertEqual(to: 2) { floordiv(5, 2) }
     }
 
     func testSubstring() {
         let s = "hello there world"
         let ss = Substring(s)
-        XCTAssertEqual(ss[3], "l")
-        XCTAssertEqual(ss[2 ..< 5], "llo")
-        XCTAssertEqual(ss.suffix(after: 8), "ere world")
+        assertEqual(to: "l") { ss[3] }
+        assertEqual(to: "llo") { ss[2 ..< 5] }
+        assertEqual(to: "ere world") { ss.suffix(after: 8) }
         let idx = ss.find("there")
-        XCTAssertEqual(ss[idx!], "t")
-        XCTAssertNil(ss.find("not there"))
+        assertEqual(to: "t") { ss[idx!] }
+        assertNil { ss.find("not there") }
         let idx2 = ss.find("world", from: idx!)
-        XCTAssertEqual(ss[idx2!], "w")
+        assertEqual(to: "w") { ss[idx2!] }
         let idx3 = ss.index(idx2!, offsetBy: 1)
-        XCTAssertNil(ss.find("world", from: idx3))
-        XCTAssertEqual(ss.find(character: "w", from: idx!), idx2)
-        XCTAssertNil(ss.find("w", from: idx3))
-        XCTAssertNil(ss.findNewline(from: idx!))
+        assertNil { ss.find("world", from: idx3) }
+        assertEqual(to: idx2) { ss.find(character: "w", from: idx!) }
+        assertNil { ss.find("w", from: idx3) }
+        assertNil { ss.findNewline(from: idx!) }
 
         let s2 = Substring("hello\nthere\r\nworld")
         let ix1 = s2.findNewline(from: s2.startIndex)
-        XCTAssertNotNil(ix1)
+        assertNotNil { ix1 }
         let ix2 = s2.findNewline(from: s2.index(ix1!, offsetBy: 1))
-        XCTAssertNotNil(ix2)
-        XCTAssertTrue(ix1! < ix2!)
-        XCTAssertNil(s2.findNewline(from: s2.index(ix2!, offsetBy: 1)))
+        assertNotNil { ix2 }
+        assertTrue { ix1! < ix2! }
+        assertNil { s2.findNewline(from: s2.index(ix2!, offsetBy: 1)) }
     }
 
     func testSubstringSingleIndex() {
         let s = Substring("cat")
-        XCTAssert(s[0] == "c")
-        XCTAssert(s[1] == "a")
-        XCTAssert(s[2] == "t")
-        XCTAssert(s[-1] == "t")
-        XCTAssert(s[-2] == "a")
+        assertEqual(to: "c") { s[0] }
+        assertEqual(to: "a") { s[1] }
+        assertEqual(to: "t") { s[2] }
+        assertEqual(to: "t") { s[-1] }
+        assertEqual(to: "a") { s[-2] }
     }
 
     func testSubstringSuffix() {
         let s = Substring("hello there world")
-        XCTAssertEqual(s.suffix(after: 6), "there world")
-        XCTAssertEqual(s.suffix(after: -5), "world")
+        assertEqual(to: "there world") { s.suffix(after: 6) }
+        assertEqual(to: "world") { s.suffix(after: -5) }
     }
 
     func testSubstringPartition() {
         let s = Substring("hello there world")
         var (prefix, suffix) = s.partition(after: 6)
-        XCTAssertEqual(prefix, "hello ")
-        XCTAssertEqual(suffix, "there world")
+        assertEqual(to: "hello ") { prefix }
+        assertEqual(to: "there world") { suffix }
 
         (prefix, suffix) = s.partition(after: -5)
-        XCTAssertEqual(prefix, "hello there ")
-        XCTAssertEqual(suffix, "world")
+        assertEqual(to: "hello there ") { prefix }
+        assertEqual(to: "world") { suffix }
 
         (prefix, suffix) = s.partition(after: 0)
-        XCTAssertEqual(prefix, "")
-        XCTAssertEqual(suffix, "hello there world")
-        XCTAssertTrue(prefix.isEmpty)
+        assertEqual(to: "") { prefix }
+        assertEqual(to: "hello there world") { suffix }
+        assertTrue { prefix.isEmpty }
 
         (prefix, suffix) = s.partition(after: -s.count)
-        XCTAssertEqual(prefix, "")
-        XCTAssertEqual(suffix, "hello there world")
-        XCTAssertTrue(prefix.isEmpty)
+        assertEqual(to: "") { prefix }
+        assertEqual(to: "hello there world") { suffix }
+        assertTrue { prefix.isEmpty }
 
         (prefix, suffix) = s.partition(after: s.count)
-        XCTAssertEqual(prefix, "hello there world")
-        XCTAssertEqual(suffix, "")
-        XCTAssertTrue(suffix.isEmpty)
+        assertEqual(to: "hello there world") { prefix }
+        assertEqual(to: "") { suffix }
+        assertTrue { suffix.isEmpty }
     }
 
     func testMergeConsecutive() {
-        let ss = Substring("hello there world")
-        let ss1 = ss[1 ..< 4]
-        let ss2 = ss[4 ..< 9]
-        XCTAssertEqual(mergeConsecutive(ss1, appendWith: ss2), "ello the")
+        assertEqual(to: Substring("ello the")) {
+            let ss = Substring("hello there world")
+            let ss1 = ss[1 ..< 4]
+            let ss2 = ss[4 ..< 9]
+            return mergeConsecutive(ss1, appendWith: ss2)
+        }
     }
 
     func testDifferenceEndsWith() {
         var diff = Difference(inNew: Substring("abcd"))
-        XCTAssertTrue(diff.endswith("cd"))
-        XCTAssertFalse(diff.endswith("cde"))
+        assertTrue { diff.endswith("cd") }
+        assertFalse { diff.endswith("cde") }
 
         diff = Difference(inOriginal: Substring("abcd"))
-        XCTAssertTrue(diff.endswith("cd"))
-        XCTAssertFalse(diff.endswith("cde"))
+        assertTrue { diff.endswith("cd") }
+        assertFalse { diff.endswith("cde") }
     }
 
     func testDifferenceStartsWith() {
         var diff = Difference(inNew: Substring("abcd"))
-        XCTAssertTrue(diff.startswith("ab"))
-        XCTAssertFalse(diff.startswith("xab"))
+        assertTrue { diff.startswith("ab") }
+        assertFalse { diff.startswith("xab") }
 
         diff = Difference(inOriginal: Substring("abcd"))
-        XCTAssertTrue(diff.startswith("ab"))
-        XCTAssertFalse(diff.startswith("xab"))
+        assertTrue { diff.startswith("ab") }
+        assertFalse { diff.startswith("xab") }
     }
-
-    static var allTests = [
-        ("testFloordiv", testFloordiv),
-        ("testSubstring", testSubstring),
-        ("testMergeConsecutive", testMergeConsecutive),
-    ]
 }

@@ -18,6 +18,12 @@ _Note:_ The underlying code is a Swift port of the Python3 code found at
 This package is currently available on _macOS_, _iOS_, and _Linux_. (Specifically it has been
 tested on Ubuntu Linux.)
 
+## What Has Changed In V2
+
+There are no API changes in V2. All that has changed is the dependency on `KSSCore` has been
+updated to the latest version, which is a non-back-compatible version. Hence this library must
+also bump its version to mark that it is no longer binary back compatible.
+
 ## Originating Code
 
 As mentioned above the underlying implementation is largely based on the python3 code of
