@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import KSSFoundation
+import KSSTest
 import XCTest
 
 import KSSDiff
-import KSSFoundation
 
 final class SpeedTests: XCTestCase {
     func testSpeed() {
@@ -28,8 +29,8 @@ final class SpeedTests: XCTestCase {
         //   diffs=1331
         //
         // I have logged a bug (#1) to track this.
-        XCTAssertEqual(diffs.count, 1331)
-        XCTAssertEqual(diffs.countMatches({ el in return el.isInsert }), 641)
-        XCTAssertEqual(diffs.countMatches({ el in return el.isDelete }), 690)
+        assertEqual(to: 1331) { diffs.count }
+        assertEqual(to: 641) { diffs.countMatches({ el in return el.isInsert }) }
+        assertEqual(to: 690) { diffs.countMatches({ el in return el.isDelete }) }
     }
 }

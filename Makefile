@@ -14,7 +14,7 @@ Tests/KSSDiffTests/DATA_%.swift: Tests/KSSDiffTests/Resources/%.txt
 
 check: Tests/LinuxMain.swift
 
-TEST_SOURCES := $(wildcard Tests/KSSDiffTests/*.swift)
+TEST_SOURCES := $(wildcard Tests/*Tests/*.swift)
 
 Tests/LinuxMain.swift: $(TEST_SOURCES)
 	swift test --generate-linuxmain
