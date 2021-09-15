@@ -14,6 +14,24 @@ import KSSFoundation
  code found at https://github.com/google/diff-match-patch.
  */
 public struct DiffMatchPatch {
+
+    public init(diffTimeout: TimeInterval = duration(1.0, .seconds),
+                diffEditCost: Int = 4,
+                matchThreshold: Double = 0.5,
+                matchDistance: Int = 1000,
+                patchDeleteThreshold: Double = 0.5,
+                patchMargin: Int = 4,
+                matchMaxBits: Int = 32)
+    {
+        self.diffTimeout = diffTimeout
+        self.diffEditCost = diffEditCost
+        self.matchThreshold = matchThreshold
+        self.matchDistance = matchDistance
+        self.patchDeleteThreshold = patchDeleteThreshold
+        self.patchMargin = patchMargin
+        self.matchMaxBits = matchMaxBits
+    }
+
     // MARK: Configuration Parameters
 
     /// Number of seconds to map a diff before giving up (0 for infinity).
