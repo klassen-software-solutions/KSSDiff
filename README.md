@@ -11,7 +11,7 @@ slightly more complex API to handle the cases where the default settings are not
 _Note:_ The underlying code is a Swift port of the Python3 code found at 
 [google/diff-match-patch](https://github.com/google/diff-match-patch).
 
-[API Documentation](https://www.kss.cc/apis/KSSDiff/docs/index.html)
+[API Documentation](https://klassensoftwaresolutions.ca/apis/KSSDiff/docs/index.html)
 
 ## Module Availability
 
